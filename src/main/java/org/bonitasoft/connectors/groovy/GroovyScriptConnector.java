@@ -16,10 +16,6 @@
  */
 package org.bonitasoft.connectors.groovy;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyRuntimeException;
-import groovy.lang.GroovyShell;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +24,10 @@ import org.bonitasoft.engine.connector.AbstractConnector;
 import org.bonitasoft.engine.connector.ConnectorException;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
 import org.bonitasoft.engine.expression.ExpressionConstants;
+
+import groovy.lang.Binding;
+import groovy.lang.GroovyRuntimeException;
+import groovy.lang.GroovyShell;
 
 /**
  * @author Matthieu Chaffotte
@@ -42,44 +42,43 @@ public class GroovyScriptConnector extends AbstractConnector {
 
     @Override
     protected void executeBusinessLogic() throws ConnectorException {
-        final String script = (String) getInputParameter(SCRIPT);
-        final Map<String, Object> variables = getVariables();
-        final Binding binding = new Binding(variables);
-        final GroovyShell shell = new GroovyShell(Thread.currentThread().getContextClassLoader(), binding);
+        String script = (String) getInputParameter(SCRIPT);
+        Map<String, Object> variables = getVariables();
+        Binding binding = new Binding(variables);
+        GroovyShell shell = new GroovyShell(Thread.currentThread().getContextClassLoader(), binding);
         try {
-            final Object result = shell.evaluate(script);
+            Object result = shell.evaluate(script);
             setOutputParameter(RESULT, result);
-        } catch (final GroovyRuntimeException gre) {
+        } catch (GroovyRuntimeException gre) {
             throw new ConnectorException(gre);
         }
     }
 
     @Override
     public void validateInputParameters() throws ConnectorValidationException {
-        final String script = (String) getInputParameter(SCRIPT);
+        String script = (String) getInputParameter(SCRIPT);
         if (script == null) {
             throw new ConnectorValidationException(this, "The script is null");
         }
     }
 
     private Map<String, Object> getVariables() {
-        final List<List<Object>> context = (List<List<Object>>) getInputParameter(CONTEXT);
-        final Map<String, Object> variables = new HashMap<String, Object>();
+        List<List<Object>> context = (List<List<Object>>) getInputParameter(CONTEXT);
+        Map<String, Object> variables = new HashMap<>();
         if (context != null) {
-            for (final List<Object> rows : context) {
-                if (rows.size() == 2) {
-                    final Object keyContent = rows.get(0);
-                    final Object valueContent = rows.get(1);
-                    if (keyContent != null) {
-                        final String key = keyContent.toString();
+            context.stream()
+                    .filter(rows -> rows.size() == 2)
+                    .filter(rows -> rows.get(0) != null)
+                    .forEach(rows -> {
+                        Object keyContent = rows.get(0);
+                        Object valueContent = rows.get(1);
+                        String key = keyContent.toString();
                         if (ExpressionConstants.API_ACCESSOR.getEngineConstantName().equals(key)) {
                             variables.put(key, getAPIAccessor());
                         } else {
                             variables.put(key, valueContent);
                         }
-                    }
-                }
-            }
+                    });
         }
         return variables;
     }
