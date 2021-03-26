@@ -1,4 +1,4 @@
-# Shell Connector
+# Groovy Connector
 
 [![Actions Status](https://github.com/bonitasoft/bonita-connector-groovy/workflows/Build/badge.svg)](https://github.com/bonitasoft/bonita-connector-groovy/actions?query=workflow%3ABuild)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=bonitasoft_bonita-connector-groovy&metric=alert_status)](https://sonarcloud.io/dashboard?id=bonitasoft_bonita-connector-groovy)
