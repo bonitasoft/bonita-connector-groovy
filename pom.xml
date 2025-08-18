@@ -46,7 +46,7 @@
         <bonita.engine.version>7.14.0</bonita.engine.version>
 
         <!-- Test -->
-        <mockito.version>1.10.19</mockito.version>
+        <mockito.version>5.13.0</mockito.version>
         <assertj.version>3.24.2</assertj.version>
         <junit.version>4.13.2</junit.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
