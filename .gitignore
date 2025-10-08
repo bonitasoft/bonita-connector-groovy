@@ -4,5 +4,6 @@ target
 .project
 .classpath
 .settings
-*.DS_Store.mvn/wrapper/*.jar
+*.DS_Store
+.mvn/wrapper/*.jar
 .vscode/
