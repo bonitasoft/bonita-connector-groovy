@@ -4,10 +4,10 @@
 
 - **Name**: Bonita Groovy Connector
 - **Artifact**: `org.bonitasoft.connectors:bonita-connector-groovy`
-- **Version**: 1.1.5-SNAPSHOT
+- **Version**: 2.0.0-SNAPSHOT (Bonita 12.0+ / Java 17; Bonita 7.14 - 11.x use the 1.x versions)
 - **Description**: Bonita connector that evaluates a Groovy script at runtime, with optional variable bindings passed in from the process context.
 - **License**: GPL-2.0
-- **Tech stack**: Java 11, Maven, Bonita Engine 7.14.0, Groovy 3.x (provided by Bonita runtime), JUnit 4, Mockito, AssertJ
+- **Tech stack**: Java 17, Maven, Bonita runtime 12.0 (`bonita-runtime-bom`), Groovy 4.x (`org.apache.groovy`, provided by the Bonita runtime), JUnit 4, Mockito, AssertJ
 
 ## Build Commands
 
@@ -84,7 +84,7 @@ Common types: `feat`, `fix`, `chore`, `refactor`, `test`, `docs`, `ci`.
 Examples:
 ```
 fix: propagate GroovyRuntimeException as ConnectorException
-chore: bump Bonita engine to 7.15.0
+chore: bump Bonita runtime to 12.0.1
 test: add test for API accessor injection in binding
 ```
 

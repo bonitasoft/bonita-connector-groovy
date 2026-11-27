@@ -6,6 +6,22 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.bonitasoft.connectors/bonita-connector-groovy.svg?label=Maven%20Central&color=orange)](https://search.maven.org/search?q=g:%22org.bonitasoft.connectors%22%20AND%20a:%22bonita-connector-groovy%22)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-yellow.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
+## Compatibility
+
+| Connector           | Bonita          | Java         | Groovy (provided by the Bonita runtime) |
+|---------------------|-----------------|--------------|-----------------------------------------|
+| 2.x (`master`)      | 12.0 and later  | 17 and later | 4.x (`org.apache.groovy`)               |
+| 1.x (up to 1.1.4)   | 7.14 to 11.x    | 11 and later | 3.x (`org.codehaus.groovy`)             |
+
+The connector definition (`scripting-groovy-script` 1.0.1) and its inputs/outputs are unchanged. The scripts are
+evaluated with the Groovy of the Bonita runtime: on Bonita 12 they run with Groovy 4, whose changes apply to them
+(for example, `groovy.util.XmlSlurper`/`XmlParser` moved to `groovy.xml`).
+
+On a runtime running a security manager (the Bonita 12 Docker image runs ProGrade, `PRO_GRADE=true`), the scripts run
+under the restrictions of the `file:/groovy/shell` code base: no environment variable read, no JVM exit, no process
+execution, no system property write, no file write outside the temporary directory, no read of sensitive files
+(`/etc/passwd`, Tomcat `conf/`...).
+
 ## Build
 
 __Clone__ or __fork__ this repository, then at the root of the project run:
